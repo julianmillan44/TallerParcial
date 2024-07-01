@@ -24,6 +24,7 @@ router.get('/', (req,res)=>{
     res.json(peliculas);
 })
 
+
 router.patch('/:id', (req, res) => {
     
       const id = parseInt(req.params.id);
@@ -62,10 +63,41 @@ router.patch('/:id', (req, res) => {
         data: peliculaEliminada
       });
    } 
-      
-
   });
 
+  //Endpoints
+
+router.get('/:nombre/clasificacion',(req,res)=>{
+  const nombre = req.params.nombre;
+  const buscarPelicula = peliculas.find(peliculas => peliculas.nombre == nombre);
+  res.json({clasificacion: buscarPelicula.clasificacion});
+})
+
+router.get('/:clasificacion', (req,res)=>{
+  const clasificacion = req.params.clasificacion;
+  const buscarClasificacion = peliculas.filter(pelicula => pelicula.clasificacion == clasificacion);
+  res.json(buscarClasificacion);
+})
+ 
+router.get('/:genero/nombre', (req,res)=>{
+  const genero = req.params.genero;
+  const buscarGenero = peliculas.find(peliculas => peliculas.genero == genero)
+  res.json({nombre: buscarGenero.nombre})
+})
+
+router.get('/:nombre/sipnosis',(req,res)=>{
+  const nombre = req.params.nombre;
+  const buscarNombre = peliculas.find(peliculas => peliculas.nombre == nombre)
+  res.json({sipnosis: buscarNombre.sipnosis})
+})
+
+router.get('/:genero', (req,res)=>{
+  const genero = req.params.genero;
+  const filtrarGeneros = peliculas.filter(pelicula => pelicula.genero == genero);
+  res.json(filtrarGeneros);
+})
+
+  
 
   module.exports = router
   
