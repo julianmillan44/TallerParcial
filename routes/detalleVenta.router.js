@@ -13,7 +13,7 @@ router.post('/',(req,res)=>{
     });
     res.json({
         message: 'Detalles de venta obtenidos',
-        data: body.id
+        data: body.id_detalle
     })
 })
 
@@ -59,8 +59,23 @@ router.delete('/:id', (req, res) => {
       data: detalleVentaIndex
     });
  } 
-    
-
 });
+
+router.get('/:id_detalle/id_pelicula/precio', (req,res)=>{
+  const id_detalle = req.params.id_detalle;
+  const buscarId = detalleVenta.find(detalle => detalle.id_detalle == id_detalle)
+  res.json({
+    id_pelicula: buscarId.id_pelicula,
+    precio: buscarId.precio
+  })
+})
+
+router.get('/:id_venta/id_detalle', (req,res)=>{
+  const id_venta = req.params.id_venta;
+  const buscarVenta = detalleVenta.find(detalle => detalle.id_venta == id_venta)
+  res.json({
+    id_detalle: buscarVenta.id_detalle
+  })
+})
 
 module.exports = router

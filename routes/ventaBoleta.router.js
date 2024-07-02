@@ -6,10 +6,13 @@ var ventas = [{}]
 router.post('/', (req, res) => {
 
     const body = req.body;
-    boleta.push({
+    ventas.push({
         id: req.body.id,
         id_cliente: req.body.id_cliente,
-        id_empleado: req.body.id_empleado
+        id_empleado: req.body.id_empleado,
+        fecha_venta: req.body.fecha_venta,
+        funcion_vendida: req.body.funcion_vendida
+
     })
     res.json({
         message: 'Boleta agregada',
@@ -63,5 +66,31 @@ router.patch('/:id', (req, res) => {
       });
    } 
   });
+
+  router.get('/:id/funcion_vendida', (req,res)=> {
+    const id = req.params.id;
+    const buscarId = ventas.find(venta => venta.id == id)
+    res.json({
+      funcion_vendida: buscarId.funcion_vendida
+    })
+  })
+
+  router.get('/:funcion_vendida/id_empleado', (req,res)=>{
+    const funcion_vendida = req.params.funcion_vendida;
+    const buscarEmpleado = ventas.find(venta => venta.funcion_vendida == funcion_vendida)
+    res.json({
+      id_empleado: buscarEmpleado.id_empleado
+    })
+  })
+
+  router.get('/:id/fecha_venta/id_cliente', (req,res)=>{
+    const id = req.params.id;
+    const buscarId = ventas.find(ventas => ventas.id == id)
+    res.json({
+      fecha_venta: buscarId.fecha_venta,
+      id_cliente: buscarId.id_cliente
+    })
+  })
+
 
   module.exports = router
